@@ -34,7 +34,7 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
-            padding-top : 50px;
+            padding-top : 100px;
         }
     </style>
     
@@ -59,6 +59,14 @@
 				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
 				fncGetProductList(1);
 			});
+			
+			 $( ".ct_list_pop td:nth-child(7)" ).on("dblclick" , function() {
+				 
+				var prodNo= $(this).data("param");
+				var tranCode= $(this).data("param2");
+				 
+				 self.location ="/product/getProduct?prodNo="+prodNo
+				});
 			
 			$( ".ct_list_pop td:nth-child(7)" ).on("click" , function() {
 				var prodNo= $(this).data("param");
@@ -92,6 +100,7 @@
 										//alert(displayValue);
 										$("h3").remove();
 										$( "#"+prodNo+"" ).html(displayValue);
+										$(displayValue).css("color", "red")
 									}
 							});		
 					}else{
@@ -115,7 +124,7 @@
 				//$(".ct_list_pop td:nth-child(11)").css("background-color" , "red");
 				//self.location ="/product/getProduct?prodNo="+prodNo+"&menu=${role}";	
 				///* 
-				$( ".ct_list_pop td:nth-child(11)" ).on("click" , function() {
+				$( ".ct_list_pop td:nth-child(13)" ).on("click" , function() {
 					var prodNo= $(this).data("param1");
 					var tranCode= $(this).data("param2").trim();
 					
@@ -134,8 +143,8 @@
 				}); 
 			
 				//==> UI 수정 추가부분  :  userId LINK Event End User 에게 보일수 있도록 
-				$( ".ct_list_pop td:nth-child(5)" ).css("color" , "skyblue");
-				$("h7").css("color" , "red");
+				//$( ".ct_list_pop td:nth-child(13)" ).css("color" , "skyblue");
+				//$("h7").css("color" , "red");
 				
 				
 				//==> 아래와 같이 정의한 이유는 ??
@@ -165,8 +174,14 @@
 	<div class="container">
 	
 	<div class="page-header text-info">
-	       <h3>회원목록조회</h3>
-	    </div>
+		<c:if test="${ role=='admin'}">
+			상품 관리
+		</c:if>
+					
+		<c:if test="${ role=='user'}">
+			상품목록조회
+		</c:if>
+	</div>
 	
 	
 	
@@ -180,7 +195,7 @@
 <form name="detailForm">
 
 <input type="hidden" id="currentPage" name="currentPage" value=""/>
-<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
+<%-- <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
 			<img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
@@ -204,7 +219,8 @@
 			<img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
 		</td>
 	</tr>
-</table>
+</table> --%>
+
 
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 		<tr>
@@ -246,13 +262,33 @@
 			</td>
 		</tr>
 
+<div class="row">
+<c:set var="i" value="0" />
+<c:forEach var="product" items="${list}">
+<c:set var="i" value="${ i+1 }" />
+  <div class="col-sm-6 col-md-3">
+    <div class="thumbnail" style="width: 200px; height: 500px; ">
+	  
+	      <img align="center" width="180px" height="150px" src="/uppic/${product.fileName}">
+	      <div class="caption">
+	        <h3>${product.brandName.brandNam} ${product.prodName}</h3>
+	        <p>${product.prodDetail}</p>
+	        <p>${product.price} 원</p>
+	        <p><a href="/purchase/purchaseView" class="btn btn-primary" role="button">구매</a> <a href="/product/getProduct?prodNo=${product.prodNo}" class="btn btn-default" role="button">상세보기</a></p>
+	      </div>
+    </div>
+  </div> 
+ </c:forEach>
+</div>
 
 
+
+<%-- 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-	<%-- 
+	
 		<td colspan="11" >전체  <%= resultPage.getTotalCount()%> 건수, 현재 <%= resultPage.getCurrentPage() %> 페이지</td>
-	--%>
+	
 		<td colspan="11" align="left">
 			전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		</td>
@@ -282,9 +318,10 @@
 		</td>	
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
+		<td class="ct_line02"></td>
 	</tr>
 	<tr>
-		<td colspan="11" bgcolor="808285" height="1"></td>
+		<td colspan="12" bgcolor="808285" height="1"></td>
 	</tr>
 
 	
@@ -300,7 +337,7 @@
 			</td>
 			<td></td>
 			<td>
-			<img width="100px" src="/uppic/${product.fileName}">
+			<img width="150px" height="100px" src="/uppic/${product.fileName}">
 			</td>
 			<td></td>
 			<td align="left" data-param="${ product.prodNo}" data-param2="${product.proTranCode}">
@@ -374,6 +411,7 @@
 		
 	</c:forEach>
 </table>
+ --%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="center">
