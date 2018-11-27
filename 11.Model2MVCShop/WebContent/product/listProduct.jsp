@@ -49,6 +49,66 @@
 		   	$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
 		}
 		
+		var isEnd = false;
+		
+		$(function(){
+			 $(window).scroll(function(){
+
+                 var window = $(this);
+
+                 var scrollTop = window.scrollTop();
+
+                 var windowHeight = window.height();
+
+                 var documentHeight = $(document).height();
+
+
+
+
+
+
+                 // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
+
+                 if( scrollTop + windowHeight + 150 > documentHeight ){
+
+							fetchList();
+                 }
+
+        	})
+        	
+        	function fetchList(){
+				
+				 var startNo = ${resultPage.getCurrentPage()}+1
+				 
+				 console.log(startNo);
+				 fncGetProductList(startNo);
+				  
+				  
+				// $("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
+
+        		 /* $.ajax({
+
+                     url:"/product/json/listProduct?startNo="+startNo,
+
+                     type: "GET",
+
+                     dataType: "json",
+
+                     success: function(result){
+                         var i=0;
+
+                         $.each(result.list[i], function(index, vo){
+
+                        	 $("#myList input").append(result);
+
+                    	 })
+                     }
+
+        		   });	*/ 
+        	} 
+		});
+        		 
+		
 		$(function() {
 			 
 			//==> 검색 Event 연결처리부분
@@ -221,7 +281,7 @@
 	</tr>
 </table> --%>
 
-
+<%--  검색창 잠깐 스탑
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 		<tr>
 		
@@ -229,16 +289,16 @@
 				<input onclick="fncGetProductList('1')" type="checkbox" name="instockOnly" value="y" 
 					${ ! empty search.instockOnly? "checked='checked'" : "" }>재고없음제외
 				<select name="searchCondition" class="ct_input_g" style="width:80px">
-				<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
+				/////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
 					<option value="0" <%= (searchCondition.equals("0") ? "selected" : "")%>>상품번호</option>
 					<option value="1"<%=(searchCondition.equals("1") ? "selected" : "") %>>상품명</option>
 					<option value="2"<%=(searchCondition.equals("2") ? "selected" : "") %>>상품가격</option>
-					/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
+					/////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
 					<option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>상품번호</option>
 					<option value="1"${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
 					<option value="2"${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>상품가격</option>
 				</select>
-				<%-- <input type="text" name="searchKeyword"  value="<%= searchKeyword %>"class="ct_input_g" style="width:200px; height:19px" />--%>
+				<input type="text" name="searchKeyword"  value="<%= searchKeyword %>"class="ct_input_g" style="width:200px; height:19px" />
 				<input type="text" name="searchKeyword"
 						value="${! empty search.searchKeyword ? search.searchKeyword : ""} 
 						class="ct_input_g" style="width:200px; height:20px" > 
@@ -261,15 +321,16 @@
 				</table>
 			</td>
 		</tr>
-
-<div class="row">
+ --%>
+<div id="myList" class="row">
 <c:set var="i" value="0" />
 <c:forEach var="product" items="${list}">
 <c:set var="i" value="${ i+1 }" />
-  <div class="col-sm-6 col-md-3">
-    <div class="thumbnail" style="width: 200px; height: 500px; ">
+  <div class="col-sm-6 col-md-6">
+  <input type="hidden" value="${i}">
+    <div class="thumbnail" style="width: 400px; height: 500px; ">
 	  
-	      <img align="center" width="180px" height="150px" src="/uppic/${product.fileName}">
+	      <img src="/uppic/${product.fileName}">
 	      <div class="caption">
 	        <h3>${product.brandName.brandNam} ${product.prodName}</h3>
 	        <p>${product.prodDetail}</p>

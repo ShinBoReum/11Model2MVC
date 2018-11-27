@@ -77,12 +77,36 @@ public class ProductRestController {
 	@RequestMapping( value="json/listProduct",method=RequestMethod.POST)
 	public Map<String , Object> listProduct(@RequestBody Search search) throws Exception{
 		System.out.println("리스트시작함");
-		int CurrentPage = 0;
-		int PageSize = 3;
-		int PageUnit = 5;
+		int CurrentPage = search.getCurrentPage();
+		int PageSize = search.getPageSize();
+		
 		
 		Map<String , Object> map=productService.getProductList(search);
-	    Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),5, 8);
+	    Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),PageSize, 8);
+		System.out.println("리절트페이지"+resultPage);
+		
+		System.out.println("리스트끝냄");
+		
+		return map;
+		
+	}
+	
+	@RequestMapping( value="json/listProduct",method=RequestMethod.GET)
+	public Map<String , Object> listProduct(@RequestParam("startNo") int startNo) throws Exception{
+		System.out.println("리스트시작함");
+		//System.out.println(request.getAttribute("startNo"));
+		System.out.println(startNo);
+		//int CurrentPage = search.getCurrentPage();
+		//int PageSize = search.getPageSize();
+		int currentPage = (startNo/4)+1;
+		
+		Search search = new Search();
+		int pageSize = 4;
+		search.setPageSize(pageSize);
+		System.out.println(pageSize);
+		search.setCurrentPage(currentPage);
+		Map<String , Object> map=productService.getProductList(search);
+	    Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),5, pageSize);
 		System.out.println("리절트페이지"+resultPage);
 		
 		System.out.println("리스트끝냄");
