@@ -5,10 +5,15 @@ DROP TABLE users;
 
 DROP SEQUENCE seq_product_prod_no;
 DROP SEQUENCE seq_transaction_tran_no;
+DROP SEQUENCE seq_transaction_brand_id;
 
 
 CREATE SEQUENCE seq_product_prod_no		 	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_brand_brand_id	INCREMENT BY 1 START WITH 100;
+
+
+alter table product add (brand_id NUMBER not null REFERENCES brand(brand_id));
 
 
 CREATE TABLE users ( 
@@ -26,10 +31,11 @@ CREATE TABLE users (
 
 
 CREATE TABLE product ( 
-	prod_no 						NUMBER 				NOT NULL,
+	prod_no 				NUMBER 				NOT NULL,
+	brand_id				NUMBER    NOT NULL REFERENCES brand(brand_id),	
 	prod_name 				VARCHAR2(100) 	NOT NULL,
-	prod_detail 				VARCHAR2(200),
-	manufacture_day		VARCHAR2(8),
+	prod_detail 			VARCHAR2(200),
+	manufacture_day			VARCHAR2(8),
 	price 							NUMBER(10),
 	image_file 					VARCHAR2(100),
 	reg_date 					DATE,
@@ -49,6 +55,13 @@ CREATE TABLE transaction (
 	order_data 			DATE,
 	dlvy_date 				DATE,
 	PRIMARY KEY(tran_no)
+);
+
+CREATE TABLE brand ( 
+	brand_id                    NUMBER 			NOT NULL,          
+	national 					VARCHAR2(10) 	NOT NULL,
+	brandName                   VARCHAR2(20)    NOT NULL,
+	PRIMARY KEY(brand_id)
 );
 
 
@@ -118,15 +131,26 @@ INSERT INTO users
 VALUES ( 'user19', 'SCOTT', '1919', 'user', NULL, NULL, NULL, NULL, sysdate);
            
            
-insert into product values (seq_product_prod_no.nextval,'vaio vgn FS70B','소니 바이오 노트북 신동품','20120514',2000000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/12/14 11:27:27', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'자전거','자전거 좋아요~','20120514',10000, 'AHlbAAAAvetFNwAA.jpg',to_date('2012/11/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'보르도','최고 디자인 신품','20120201',1170000, 'AHlbAAAAvewfegAB.jpg',to_date('2012/10/14 10:49:39', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'보드세트','한시즌 밖에 안썼습니다. 눈물을 머금고 내놓음 ㅠ.ㅠ','20120217', 200000, 'AHlbAAAAve1WwgAC.jpg',to_date('2012/11/14 10:50:58', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'인라인','좋아욥','20120819', 20000, 'AHlbAAAAve37LwAD.jpg',to_date('2012/11/14 10:51:40', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'삼성센스 2G','sens 메모리 2Giga','20121121',800000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/11/14 18:46:58', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'연꽃','정원을 가꿔보세요','20121022',232300, 'AHlbAAAAtDPSiQAA.jpg',to_date('2012/11/15 17:39:01', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval, '911 카레라','스포츠카','20180911',154200000, '911.png',to_date('2012/12/14 11:27:27', 'YYYY/MM/DD HH24:MI:SS'),116);
+insert into product values (seq_product_prod_no.nextval, '마칸','중형 SUV','20181010',75600000, 'macan.png',to_date('2012/11/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),116);
+insert into product values (seq_product_prod_no.nextval, 'C클래스 AMG 63','중형 세단','20180518',128000000, 'c_amg_63.jpg',to_date('2012/10/14 10:49:39', 'YYYY/MM/DD HH24:MI:SS'),115);
+insert into product values (seq_product_prod_no.nextval, 'xc60','중형 SUV','20181101', 75400000, 'xc60.jpg',to_date('2012/11/14 10:50:58', 'YYYY/MM/DD HH24:MI:SS'),117);
+insert into product values (seq_product_prod_no.nextval, 'xc40','소형 SUV','20180101', 50800000, 'xc40.jpg',to_date('2012/11/14 10:51:40', 'YYYY/MM/DD HH24:MI:SS'),117);
+insert into product values (seq_product_prod_no.nextval, '카니발 하이리무진','대형차','20180201',59780000, 'hi.jpg',to_date('2012/11/14 18:46:58', 'YYYY/MM/DD HH24:MI:SS'),111);
+insert into product values (seq_product_prod_no.nextval, '기블리','고급 세단','20180704',144000000, 'mg.jpg',to_date('2012/11/15 17:39:01', 'YYYY/MM/DD HH24:MI:SS'),118);
+insert into product values (seq_product_prod_no.nextval, '컨트리맨','소형 SUV','20181104',44400000, 'mini.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'),119);
 
+
+insert into brand values (seq_brand_brand_id.nextval,'국산','현대');
+insert into brand values (seq_brand_brand_id.nextval,'국산','기아');
+insert into brand values (seq_brand_brand_id.nextval,'국산','르노');
+insert into brand values (seq_brand_brand_id.nextval,'국산','쌍용');
+insert into brand values (seq_brand_brand_id.nextval,'국산','쉐보레');
+insert into brand values (seq_brand_brand_id.nextval,'수입','벤츠');
+insert into brand values (seq_brand_brand_id.nextval,'수입','포르쉐');
+insert into brand values (seq_brand_brand_id.nextval,'수입','볼보');
+insert into brand values (seq_brand_brand_id.nextval,'수입','마세라티');
+insert into brand values (seq_brand_brand_id.nextval,'수입','미니쿠퍼');
 
 commit;
 

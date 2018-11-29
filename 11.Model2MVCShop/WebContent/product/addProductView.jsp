@@ -15,6 +15,12 @@
 <script type="text/javascript" src="../javascript/calendar.js"></script>
 <script type="text/javascript">
 
+function history(){
+	popWin = window.open("/history.jsp",
+												"popWin",
+												"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+}
+
 function fncAddProduct(){
 	//Form 유효성 검증
  	var name = document.detailForm.prodName.value;
@@ -111,6 +117,7 @@ $( function() {
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
+	
 		<td width="104" class="ct_write">
 			브랜드 <imgsrc="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle">
 		</td>
@@ -118,18 +125,26 @@ $( function() {
 		<td class="ct_write01">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
+				
 					<td width="105">
 					<select name="brand_id" class="ct_input_g" 
 									style="width: 100px; height: 25px" maxLength="20">
 						<option >브랜드</option>
-						<option value="115">벤츠</option>
-						<option value="116">포르쉐</option>
-						<option value="117">볼보</option>
-						<option value="118">마세라티</option>
-						<option value="111">기아</option>
-						<option value="119">미니쿠퍼</option>
+						
+						<c:forEach var="brand" items="${list}">
+						
+							
+							<option value="1">${brand.brandNam }</option>
+						</c:forEach>
 					</select>
+					
 					</td>
+					<td>
+					<a href="javascript:history()">추가하기(後리뉴하세요)</a>
+					</td>
+		
+					
+					
 				</tr>
 			</table>
 		</td>

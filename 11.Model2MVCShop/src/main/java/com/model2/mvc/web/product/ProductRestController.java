@@ -98,7 +98,7 @@ public class ProductRestController {
 		System.out.println(startNo);
 		//int CurrentPage = search.getCurrentPage();
 		//int PageSize = search.getPageSize();
-		int currentPage = (startNo/4)+1;
+		int currentPage = startNo;
 		
 		Search search = new Search();
 		int pageSize = 4;

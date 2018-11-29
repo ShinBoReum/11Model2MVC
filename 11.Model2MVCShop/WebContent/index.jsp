@@ -93,7 +93,7 @@
 	
 			<!--  Menu 구성 Start /////////////////////////////////////-->     	
 			<div class="col-md-3">
-		        
+		        <c:if test="${sessionScope.user.role == 'admin'}">
 		       	<!--  회원관리 목록에 제목 -->
 				<div class="panel panel-primary">
 					<div class="panel-heading">
@@ -117,21 +117,27 @@
          			</div>
 					<ul class="list-group">
 						 <li class="list-group-item">
-						 	<a href="#">판매상품등록</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						 	<a href="/product/addProductView">판매상품등록</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 						 <li class="list-group-item">
 						 	<a href="#">판매상품관리</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 					</ul>
 		        </div>
-               
+               </c:if>
                
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 							<i class="glyphicon glyphicon-shopping-cart"></i> 상품구매
 	    			</div>
 					<ul class="list-group">
-						 <li class="list-group-item"><a href="#">상품검색</a></li>
+						 <li class="list-group-item"><a href="/product/listProduct">상품검색</a></li>
+							 <ul class="dropdown-menu">
+		                         <li><a href="#">판매상품등록</a></li>
+		                         <li><a href="#">판매상품관리</a></li>
+		                         <li class="divider"></li>
+		                         <li><a href="#">etc..</a></li>
+		                     </ul>
 						  <li class="list-group-item">
 						  	<a href="#">구매이력조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						  </li>

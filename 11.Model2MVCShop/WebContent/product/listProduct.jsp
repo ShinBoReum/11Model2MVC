@@ -80,32 +80,42 @@
 				
 				 var startNo = ${resultPage.getCurrentPage()}+1
 				 
-				 console.log(startNo);
+				 //console.log(startNo);
 				 fncGetProductList(startNo);
-				  
-				  
-				// $("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
 
-        		 /* $.ajax({
+        		  $.ajax({
 
                      url:"/product/json/listProduct?startNo="+startNo,
 
-                     type: "GET",
-
-                     dataType: "json",
-
-                     success: function(result){
-                         var i=0;
-
-                         $.each(result.list[i], function(index, vo){
-
-                        	 $("#myList input").append(result);
-
-                    	 })
-                     }
-
-        		   });	*/ 
-        	} 
+             
+						method : "GET" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData , status) {
+	
+							//Debug...
+							//alert(status);
+							//Debug...
+							//alert("JSONData : \n"+JSONData);
+							
+							var displayValue = "<div class='row'><c:set var='i' value='0' /><c:forEach var='product' items='${list}'><c:set var='i' value='${ i+1 }' />"+
+									  "<div class='col-sm-6 col-md-6'><input type='hidden' value='${i}'><div class='thumbnail' style='width: 400px; height: 500px; '>"+
+									"<img src='/uppic/${product.fileName}'><div class='caption'><h3>${product.brandName.brandNam} ${product.prodName}</h3><p>${product.prodDetail}</p>"+
+									"<p>${product.price} 원</p>"+
+									"<p><a href='/purchase/purchaseView' class='btn btn-primary' role='button'>구매</a> <a href='/product/getProduct?prodNo=${product.prodNo}' class='btn btn-default' role='button'>상세보기</a></p>"+
+										"</div></div></div></c:forEach></div>";
+								
+							//Debug...									
+							//alert(displayValue);
+							$( "#"+myList+"" ).append(displayValue);
+							//$(displayValue).css("color", "red")
+						}
+				});	
+        		  
+        	} //fetchList끝 
 		});
         		 
 		
@@ -152,15 +162,17 @@
 										//Debug...
 										//alert("JSONData : \n"+JSONData);
 										
-										var displayValue = "<h3>"
-																	+"상품명 : "+JSONData.prodName+"<br/>"
-																
-																	+"</h3>";
+										var displayValue = "<div id='myList' class='row'><c:set var='i' value='0' /><c:forEach var='product' items='${list}'><c:set var='i' value='${ i+1 }' />"+
+												  "<div class='col-sm-6 col-md-6'><input type='hidden' value='${i}'><div class='thumbnail' style='width: 400px; height: 500px; '>"+
+												"<img src='/uppic/${product.fileName}'><div class='caption'><h3>${product.brandName.brandNam} ${product.prodName}</h3><p>${product.prodDetail}</p>"+
+												"<p>${product.price} 원</p>"+
+												"<p><a href='/purchase/purchaseView' class='btn btn-primary' role='button'>구매</a> <a href='/product/getProduct?prodNo=${product.prodNo}' class='btn btn-default' role='button'>상세보기</a></p>"+
+													"</div></div></div></c:forEach></div>";
+											
 										//Debug...									
 										//alert(displayValue);
-										$("h3").remove();
-										$( "#"+prodNo+"" ).html(displayValue);
-										$(displayValue).css("color", "red")
+										$( "#"+myList+"" ).append(displayValue);
+										//$(displayValue).css("color", "red")
 									}
 							});		
 					}else{
@@ -218,8 +230,6 @@
 				//console.log ( $(".ct_list_pop:nth-child(6)" ).html() ); //==> ok
 				//console.log ( $(".ct_list_pop:nth-child(7)" ).html() ); 
 			});	
-		
-		
 		
 	</script>
 </head>

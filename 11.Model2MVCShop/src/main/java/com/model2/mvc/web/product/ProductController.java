@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.brand.BrandService;
 import com.model2.mvc.service.domain.Brand;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.User;
@@ -32,6 +33,10 @@ public class ProductController {
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	
+	@Autowired
+	@Qualifier("brandServiceImpl")
+	private BrandService brandService;
+	
 	public ProductController() {
 		System.out.println(this.getClass());
 	}
@@ -43,6 +48,27 @@ public class ProductController {
 	//@Value("#{commonProperties['pageSize']}")
 	@Value("#{commonProperties['pageSize'] ?: 8}")
 	int pageSize;
+	
+	
+	////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
+	
+	
+	@RequestMapping( value="addProductView" )
+	public String addProductView(Model model) throws Exception {
+		
+		System.out.println("연결하겠음");
+		
+		Map<String , Object> map=brandService.getBrandList();
+		
+		System.out.println(map);
+		
+		model.addAttribute("list", map.get("list"));
+		
+		
+		return "forward:/product/addProductView.jsp";
+		
+	}
 	
 	@RequestMapping
 	public String addProduct(@RequestParam("brand_id") int brand_id,

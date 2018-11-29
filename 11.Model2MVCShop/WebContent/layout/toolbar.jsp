@@ -4,7 +4,6 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar  navbar-inverse navbar-fixed-top">
 	
@@ -77,9 +76,9 @@
 	                           <li><a href="#">구매이력조회</a></li>
 	                         </c:if>
 	                         
-	                         <li><a href="#">최근본상품</a></li>
+	                         <li><a href="history()">최근본상품</a></li>
 	                         <li class="divider"></li>
-	                         <li><a href="#">etc..</a></li>
+	                         <li><a href="history()">etc..</a></li>
 	                     </ul>
 	                 </li>
 	                 
@@ -119,7 +118,7 @@
 			
 		 	$( "a:contains('판매상품등록')" ).on("click" , function() {
 				
-		 		 self.location = "/product/addProductView.jsp" 
+		 		 self.location = "/product/addProductView" 
 			}); 
 		 	
 		 	$( "a:contains('판매상품관리')" ).on("click" , function() {
