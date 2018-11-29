@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BrandMapper">
+ 	
+ 	
+	<resultMap id="brandSelectMap" type="brand">
+		<result property="brand_id"     		column="brand_id" 		jdbcType="NUMERIC" />
+		<result property="national"	    		column="national" 		jdbcType="VARCHAR" />
+		<result property="brandNam" 	    	column="brandName" 		jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addBrand"		parameterType="brand">
+	 	 <selectKey keyProperty="brand_id" resultType="int" order="BEFORE">
+    		select seq_brand_brand_id.nextval FROM DUAL
+  		  </selectKey>
+	 	
+	 	INSERT
+		INTO brand( brand_id, national , brandName) 
+		VALUES	 (#{brand_id},#{national} , #{brandNam})
+	 </insert>
+	 
+	 <select  id="getBrandList" 	resultMap="brandSelectMap">
+	 	 SELECT*FROM brand 
+			
+	 </select>
+
+<!-- 
+	 <select 	id	="getProduct"	parameterType="string"	resultMap="productSelectMap">
+		SELECT
+		p.prod_no, p.prod_name , p.prod_detail , p.manufacture_day , p.price, p.image_file, p.reg_date, b.brandName AS brandName	
+		FROM product p, brand b
+		WHERE p.brand_id= b.brand_id
+		and p.prod_no = #{prodNo}
+	 </select>
+	 
+
+	 <update	id="updateProduct"	parameterType="product" >
+	   	UPDATE product
+	   	<set>
+	   		prod_name 		= #{prodName} ,
+			prod_detail		= #{prodDetail},
+			manufacture_day = #{manuDate} ,
+			price			= #{price},
+			image_file  	= #{fileName},
+			BRAND_ID		= #{brandId.brand_id}
+	   	</set>
+	   	WHERE prod_no = #{prodNo}
+	 </update>
+
+	 <select  id="getBrandList" 	resultMap="productSelectMap">
+	 	 SELECT *
+		FROM ( SELECT inner_table. * ,  ROWNUM AS row_seq 
+			FROM (
+	  	SELECT p.*, b.brandName AS brandName, nvl(t.tran_status_code,0) AS tran_status_code, t.tran_no AS tran_no FROM product p, transaction t, brand b
+	  	WHERE p.brand_id= b.brand_id and p.prod_no=t.prod_no(+)
+				<if test="searchCondition != null">
+					
+						<if test="searchCondition == 0 and searchKeyword !='' ">
+			 				and p.prod_no = #{searchKeyword}
+						</if>
+						<if test="searchCondition == 1 and searchKeyword !='' ">
+			 				and p.prod_name = #{searchKeyword}
+						</if>
+						<if test="searchCondition == 2 and searchKeyword !='' ">
+			 				and p.price = #{searchKeyword}
+						</if>
+					
+				</if>
+				
+				<if test="instockOnly !=null">
+					and t.tran_status_code is null
+				</if>
+				
+				<if test="sort ==1 ">
+					order by p.prod_name
+				</if>
+				
+				<if test="sort ==2 ">
+					order by p.PRICE
+				</if>
+				
+				<if test="sort ==3 ">
+					order by p.REG_DATE
+				</if>
+				
+				<if test="sort ==null ">
+					order by p.prod_no
+				</if>
+				
+				) inner_table 
+			WHERE ROWNUM &lt;= #{endRowNum})
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+			
+	 </select>
+	 	  위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
+		
+	
+ 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	 SELECT COUNT(*)
+		FROM ( SELECT p.*, nvl(t.tran_status_code,0) AS tran_status_code,t.tran_no AS tran_no FROM product p, transaction t
+	  	WHERE 1=1 and p.prod_no=t.prod_no(+)
+				<if test="searchCondition != null">
+					
+						<if test="searchCondition == 0 and searchKeyword !='' ">
+				 			and p.prod_no like #{searchKeyword}
+						</if>
+						<if test="searchCondition == 1 and searchKeyword !='' ">
+				 		and p.prod_name like #{searchKeyword}
+						</if>
+						<if test="searchCondition == 2 and searchKeyword !='' ">
+				 		and p.price like #{searchKeyword}
+						</if>
+					
+				</if> 
+				) countTable	 
+								
+	 </select> -->
+</mapper>

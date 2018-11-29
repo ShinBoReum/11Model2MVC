@@ -71,6 +71,7 @@
 	                     </a>
 	                     <ul class="dropdown-menu">
 	                         <li><a href="#">상 품 검 색</a></li>
+	                         <li><a href="#">차 량 비 교</a></li>
 	                         
 	                         <c:if test="${sessionScope.user.role == 'user'}">
 	                           <li><a href="#">구매이력조회</a></li>
@@ -130,6 +131,12 @@
 		 	$( "a:contains('상 품 검 색')" ).on("click" , function() {
 				
 		 		self.location = "/product/listProduct"
+		 		
+			});
+		 	
+			$( "a:contains('차 량 비 교')" ).on("click" , function() {
+				
+		 		self.location = "/brand/compare.jsp"
 		 		
 			});
 		 	

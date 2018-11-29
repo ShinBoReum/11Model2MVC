@@ -77,6 +77,7 @@ public class ProductRestController {
 	@RequestMapping( value="json/listProduct",method=RequestMethod.POST)
 	public Map<String , Object> listProduct(@RequestBody Search search) throws Exception{
 		System.out.println("리스트시작함");
+		
 		int CurrentPage = search.getCurrentPage();
 		int PageSize = search.getPageSize();
 		
@@ -94,6 +95,7 @@ public class ProductRestController {
 	@RequestMapping( value="json/listProduct",method=RequestMethod.GET)
 	public Map<String , Object> listProduct(@RequestParam("startNo") int startNo) throws Exception{
 		System.out.println("리스트시작함");
+		System.out.println("스타트넘버"+startNo);
 		//System.out.println(request.getAttribute("startNo"));
 		System.out.println(startNo);
 		//int CurrentPage = search.getCurrentPage();

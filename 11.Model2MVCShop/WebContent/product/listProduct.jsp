@@ -40,7 +40,7 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	
+	var startNo = 1
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
 		function fncGetProductList(currentPage) {
 			//document.getElementById("currentPage").value = currentPage;
@@ -78,10 +78,11 @@
         	
         	function fetchList(){
 				
-				 var startNo = ${resultPage.getCurrentPage()}+1
 				 
+				 startNo +=${resultPage.getCurrentPage()}
+
 				 //console.log(startNo);
-				 fncGetProductList(startNo);
+				 //fncGetProductList(startNo);
 
         		  $.ajax({
 
@@ -100,17 +101,29 @@
 							//alert(status);
 							//Debug...
 							//alert("JSONData : \n"+JSONData);
+							console.log(JSONData.list);
 							
-							var displayValue = "<div class='row'><c:set var='i' value='0' /><c:forEach var='product' items='${list}'><c:set var='i' value='${ i+1 }' />"+
-									  "<div class='col-sm-6 col-md-6'><input type='hidden' value='${i}'><div class='thumbnail' style='width: 400px; height: 500px; '>"+
-									"<img src='/uppic/${product.fileName}'><div class='caption'><h3>${product.brandName.brandNam} ${product.prodName}</h3><p>${product.prodDetail}</p>"+
-									"<p>${product.price} 원</p>"+
-									"<p><a href='/purchase/purchaseView' class='btn btn-primary' role='button'>구매</a> <a href='/product/getProduct?prodNo=${product.prodNo}' class='btn btn-default' role='button'>상세보기</a></p>"+
-										"</div></div></div></c:forEach></div>";
+							var list="";
+							for(i in JSONData.list){
+								var product = JSONData.list[i];
 								
+								//console.log(product.fileName);
+								
+								
+								list+="<div class='col-sm-6 col-md-6'>";
+								list+="<div class='thumbnail' style='width: 400px; height: 500px; '>";
+							    list+="<img src='/uppic/"+product.fileName+"'>";
+								list+="<div class='caption'>";
+								list+="<h3>"+product.brandName.brandNam +"&nbsp"+ product.prodName+"</h3>"
+								list+="<p>"+product.prodDetail+"</p>"
+								list+="<p><a href='/purchase/purchaseView' class='btn btn-primary' role='button'>구매</a> <a href='/product/getProduct?prodNo="+product.prodNo+"' class='btn btn-default' role='button'>상세보기</a></p>"
+								list+="</div></div></div>"
+								      
+							}
+							
 							//Debug...									
 							//alert(displayValue);
-							$( "#"+myList+"" ).append(displayValue);
+							$( "#myList" ).append(list);
 							//$(displayValue).css("color", "red")
 						}
 				});	
@@ -161,6 +174,7 @@
 										//alert(status);
 										//Debug...
 										//alert("JSONData : \n"+JSONData);
+										console.log(JSONData.list);
 										
 										var displayValue = "<div id='myList' class='row'><c:set var='i' value='0' /><c:forEach var='product' items='${list}'><c:set var='i' value='${ i+1 }' />"+
 												  "<div class='col-sm-6 col-md-6'><input type='hidden' value='${i}'><div class='thumbnail' style='width: 400px; height: 500px; '>"+
@@ -483,7 +497,7 @@
 	</c:forEach>
 </table>
  --%>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+<%-- 	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="center">
 		
@@ -494,7 +508,7 @@
     	</td>
 	</tr>
 
-</table>
+</table> --%>
 <!-- PageNavigation End... -->
 
 </form>
