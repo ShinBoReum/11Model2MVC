@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Brand;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.product.ProductDAO;
@@ -54,6 +55,15 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public void updateProduct(Product product) throws Exception {
 		productDao.updateProduct(product);
+	}
+
+	@Override
+	public Map<String, Object> compareCar2(int brand_ids) throws Exception {
+		List<Brand> list= productDao.compareCar2(brand_ids);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		return map;
 	}
 	
 

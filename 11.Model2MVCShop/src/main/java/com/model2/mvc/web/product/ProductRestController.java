@@ -41,10 +41,28 @@ public class ProductRestController {
 		System.out.println(this.getClass());
 		
 	}
+	@RequestMapping( value="json/compare2")
+	public Map<String , Object>  compare2(@RequestParam("brand_ids") int brand_ids) throws Exception{
+		System.out.println("컴패얼2시작함");
+		System.out.println(brand_ids);
+		//System.out.println(brand);
+		//brand.setNational(brand.getNational());
+		Map<String , Object> map=productService.compareCar2(brand_ids);
+		
+		System.out.println(map);
+		
+		
+		System.out.println("끝냄");
 	
-	@RequestMapping( value="json/getProduct/{prodNo}", method=RequestMethod.GET )
-	public Product getProduct( @PathVariable int prodNo ) throws Exception{
-		System.out.println("시작함");
+		return map;
+		//return null;
+		
+	}
+	
+	@RequestMapping( value="json/getProduct", method=RequestMethod.GET )
+	public Product getProduct( @RequestParam("prodNo") int prodNo ) throws Exception{
+		//@PathVariable int prodNo
+		System.out.println("겟프로덕트시작함");
 		System.out.println("/product/json/getProduct : GET 레스컨트롤러");
 		System.out.println("끝냄");
 		//Business Logic

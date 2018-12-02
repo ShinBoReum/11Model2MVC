@@ -95,6 +95,7 @@
 		 	 		<h1 class="text-center">로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h1>
 
 			        <form class="form-horizontal">
+			        <input type="hidden" name="redirecturl" value="${param.redirecturl}">
 		  
 					  <div class="form-group">
 					    <label for="userId" class="col-sm-4 control-label">아 이 디</label>

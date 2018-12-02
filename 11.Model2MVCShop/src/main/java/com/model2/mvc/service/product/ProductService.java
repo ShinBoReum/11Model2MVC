@@ -10,16 +10,14 @@ import com.model2.mvc.service.domain.User;
 public interface ProductService {
 	
 	public void addProduct(Product product) throws Exception;
-	
 
 	public Product getProduct(int prodNo) throws Exception;
-	
-	
 
 	public Map<String , Object> getProductList(Search search) throws Exception;
-	
 
 	public void updateProduct(Product product) throws Exception;
+	
+	public Map<String , Object> compareCar2(int brand_ids) throws Exception;
 	
 
 }

@@ -103,15 +103,23 @@ public class UserController {
 	
 	
 	@RequestMapping( value="login", method=RequestMethod.GET )
-	public String login() throws Exception{
+	public String login(HttpSession session, HttpServletRequest request) throws Exception{
 		
 		System.out.println("/user/logon : GET");
-
+		
+		String redirecturl = request.getParameter("redirecturl");
+		System.out.println(redirecturl);
+		if(redirecturl !=null) {
+			System.out.println("이걸로 보냅니다");
+			return "redirect:/user/loginView.jsp?redirecturl="+redirecturl;
+		}
 		return "redirect:/user/loginView.jsp";
+	
 	}
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
+	public String login(@ModelAttribute("user") User user , HttpSession session, 
+			HttpServletRequest request) throws Exception{
 		
 		System.out.println("/user/login : POST");
 		//Business Logic
@@ -119,6 +127,12 @@ public class UserController {
 		
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
+		}
+		System.out.println("찍혀야함"+request.getParameter("redirecturl"));
+		
+		if(request.getParameter("redirecturl") !="") {
+			System.out.println("get으로 가야하는데???");
+			return "redirect:"+request.getParameter("redirecturl");
 		}
 		
 		return "redirect:/index.jsp";

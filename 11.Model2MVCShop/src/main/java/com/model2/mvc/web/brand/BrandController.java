@@ -62,26 +62,21 @@ public class BrandController {
 		
 		
 		return "forward:/history.jsp";
+	}
+	
+	@RequestMapping( value="compareCar" )
+	public String compareCar(Model model) throws Exception {
+		
+		System.out.println("연결하겠음");
+		
+		//Map<String , Object> map=brandService.getBrandList();
+		
+		//System.out.println(map);
+		
+		//model.addAttribute("list", map.get("list"));
 		
 		
-		
-		/*
-		Brand bran= new Brand();
-		bran.setBrand_id(brand_id);
-		//String BN = bran.getBrandNam();
-		product.setBrandId(bran);
-		//System.out.println("1.프로덕트는?"+product);
-		//Business Logic
-		productService.addProduct(product);
-		
-		System.out.println("프로덕트 끝????"+product);
-		
-		
-		return "forward:/product/addProduct.jsp";
-		//return null;
-		
-		*/
-		
+		return "forward:/brand/compare.jsp";
 		
 	}
 	/*

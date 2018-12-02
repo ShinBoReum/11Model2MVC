@@ -13,6 +13,10 @@ public interface BrandService {
 	public void addBrand(Brand brand) throws Exception;
 	
 	public Map<String , Object> getBrandList() throws Exception;
+	
+	public Map<String , Object> compareCar(String national) throws Exception;
+	
+	public Map<String , Object> compareCar2(int brand_ids) throws Exception;
 
 	
 

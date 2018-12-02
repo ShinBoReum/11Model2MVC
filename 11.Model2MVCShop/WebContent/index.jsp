@@ -33,7 +33,13 @@
    	
    	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-		
+		function history(){
+			popWin = window.open("/history.jsp",
+														"popWin",
+														"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		}
+
+
 		//============= 회원원가입 화면이동 =============
 		$( function() {
 			//==> 추가된부분 : "addUser"  Event 연결
@@ -47,6 +53,17 @@
 			//==> 추가된부분 : "addUser"  Event 연결
 			$("a[href='#' ]:contains('로 그 인')").on("click" , function() {
 				self.location = "/user/login"
+			});
+		});
+		
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('최근본상품')").on("click" , function() {
+				history();
+			});
+			
+			$("a[href='#' ]:contains('차 량 비 교')").on("click" , function() {
+				self.location = "/brand/compareCar"
 			});
 		});
 		
@@ -131,18 +148,21 @@
 							<i class="glyphicon glyphicon-shopping-cart"></i> 상품구매
 	    			</div>
 					<ul class="list-group">
-						 <li class="list-group-item"><a href="/product/listProduct">상품검색</a></li>
+						 <li class="list-group-item"><a href="/product/listProduct">상품검색</a> <i class="glyphicon glyphicon-search"></i></li>
 							 <ul class="dropdown-menu">
 		                         <li><a href="#">판매상품등록</a></li>
 		                         <li><a href="#">판매상품관리</a></li>
 		                         <li class="divider"></li>
 		                         <li><a href="#">etc..</a></li>
 		                     </ul>
-						  <li class="list-group-item">
+						<!--   <li class="list-group-item">
 						  	<a href="#">구매이력조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
-						  </li>
+						  </li> -->
+						  <li class="list-group-item">
+						 	<a href="#">차 량 비 교</a> <i class="glyphicon glyphicon-ok"></i>
+						 </li>
 						 <li class="list-group-item">
-						 	<a href="#">최근본상품</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						 	<a href="#">최근본상품</a> <i class="glyphicon glyphicon-tags"></i>
 						 </li>
 					</ul>
 				</div>

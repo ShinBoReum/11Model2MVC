@@ -40,7 +40,7 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	var startNo = 1
+		var startNo = 1
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
 		function fncGetProductList(currentPage) {
 			//document.getElementById("currentPage").value = currentPage;
@@ -62,11 +62,6 @@
 
                  var documentHeight = $(document).height();
 
-
-
-
-
-
                  // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
 
                  if( scrollTop + windowHeight + 150 > documentHeight ){
@@ -77,7 +72,6 @@
         	})
         	
         	function fetchList(){
-				
 				 
 				 startNo +=${resultPage.getCurrentPage()}
 
@@ -96,20 +90,11 @@
 							"Content-Type" : "application/json"
 						},
 						success : function(JSONData , status) {
-	
-							//Debug...
-							//alert(status);
-							//Debug...
-							//alert("JSONData : \n"+JSONData);
-							console.log(JSONData.list);
-							
+							//console.log(JSONData.list);
 							var list="";
 							for(i in JSONData.list){
 								var product = JSONData.list[i];
-								
 								//console.log(product.fileName);
-								
-								
 								list+="<div class='col-sm-6 col-md-6'>";
 								list+="<div class='thumbnail' style='width: 400px; height: 500px; '>";
 							    list+="<img src='/uppic/"+product.fileName+"'>";
@@ -118,17 +103,12 @@
 								list+="<p>"+product.prodDetail+"</p>"
 								list+="<p><a href='/purchase/purchaseView' class='btn btn-primary' role='button'>구매</a> <a href='/product/getProduct?prodNo="+product.prodNo+"' class='btn btn-default' role='button'>상세보기</a></p>"
 								list+="</div></div></div>"
-								      
 							}
-							
-							//Debug...									
-							//alert(displayValue);
 							$( "#myList" ).append(list);
-							//$(displayValue).css("color", "red")
 						}
 				});	
         		  
-        	} //fetchList끝 
+        	} //fetchList끝 //여기까지 무한스크롤
 		});
         		 
 		
@@ -138,57 +118,17 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함. 
 			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
-				//Debug..
-				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
 				fncGetProductList(1);
 			});
-			
-			 $( ".ct_list_pop td:nth-child(7)" ).on("dblclick" , function() {
-				 
+			$( "p:contains('상세보기')" ).on("click" , function() {
 				var prodNo= $(this).data("param");
 				var tranCode= $(this).data("param2");
-				 
-				 self.location ="/product/getProduct?prodNo="+prodNo
-				});
-			
-			$( ".ct_list_pop td:nth-child(7)" ).on("click" , function() {
-				var prodNo= $(this).data("param");
-				var tranCode= $(this).data("param2");
-				//var role= ${role};
+				
 				
 				if(${role=='user'}){
 					if(tranCode==0){
-						/* self.location ="/product/getProduct?prodNo="+prodNo */
-						$.ajax( 
-								{
-									url : "/product/json/getProduct/"+prodNo ,
-									method : "GET" ,
-									dataType : "json" ,
-									headers : {
-										"Accept" : "application/json",
-										"Content-Type" : "application/json"
-									},
-									success : function(JSONData , status) {
-	
-										//Debug...
-										//alert(status);
-										//Debug...
-										//alert("JSONData : \n"+JSONData);
-										console.log(JSONData.list);
-										
-										var displayValue = "<div id='myList' class='row'><c:set var='i' value='0' /><c:forEach var='product' items='${list}'><c:set var='i' value='${ i+1 }' />"+
-												  "<div class='col-sm-6 col-md-6'><input type='hidden' value='${i}'><div class='thumbnail' style='width: 400px; height: 500px; '>"+
-												"<img src='/uppic/${product.fileName}'><div class='caption'><h3>${product.brandName.brandNam} ${product.prodName}</h3><p>${product.prodDetail}</p>"+
-												"<p>${product.price} 원</p>"+
-												"<p><a href='/purchase/purchaseView' class='btn btn-primary' role='button'>구매</a> <a href='/product/getProduct?prodNo=${product.prodNo}' class='btn btn-default' role='button'>상세보기</a></p>"+
-													"</div></div></div></c:forEach></div>";
-											
-										//Debug...									
-										//alert(displayValue);
-										$( "#"+myList+"" ).append(displayValue);
-										//$(displayValue).css("color", "red")
-									}
-							});		
+						self.location ="/product/getProduct?prodNo="+prodNo 
+								
 					}else{
 						$( this ).css("color" , "gray")
 						$( this ).text("재고가 없습니다.");
@@ -355,11 +295,12 @@
     <div class="thumbnail" style="width: 400px; height: 500px; ">
 	  
 	      <img src="/uppic/${product.fileName}">
-	      <div class="caption">
+	      <div align="center" class="caption">
 	        <h3>${product.brandName.brandNam} ${product.prodName}</h3>
 	        <p>${product.prodDetail}</p>
 	        <p>${product.price} 원</p>
-	        <p><a href="/purchase/purchaseView" class="btn btn-primary" role="button">구매</a> <a href="/product/getProduct?prodNo=${product.prodNo}" class="btn btn-default" role="button">상세보기</a></p>
+	        <p data-param="${ product.prodNo}" data-param2="${product.proTranCode}">
+	        <a class="btn btn-default" role="button">상세보기</a></p>
 	      </div>
     </div>
   </div> 

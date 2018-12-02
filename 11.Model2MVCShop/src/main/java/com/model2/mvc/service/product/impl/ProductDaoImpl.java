@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Brand;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductDAO;
 
@@ -61,6 +62,11 @@ public class ProductDaoImpl implements ProductDAO{
 	@Override
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("ProductMapper.getTotalCount", search);
+	}
+
+	@Override
+	public List<Brand> compareCar2(int brand_ids) throws Exception {
+		return sqlSession.selectList("ProductMapper.compareCar2",brand_ids);
 	}
 
 }

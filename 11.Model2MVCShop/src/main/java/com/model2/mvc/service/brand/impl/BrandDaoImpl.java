@@ -32,6 +32,7 @@ public class BrandDaoImpl implements BrandDAO{
 
 	@Override
 	public void addBrand(Brand brand) throws Exception {
+		
 		sqlSession.insert("BrandMapper.addBrand", brand);
 		
 	}
@@ -40,6 +41,17 @@ public class BrandDaoImpl implements BrandDAO{
 	public List<Brand> getBrandList() throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("BrandMapper.getBrandList");
+	}
+
+	@Override
+	public List<Brand> compareCar(String national) throws Exception {
+		
+		return sqlSession.selectList("BrandMapper.compareCar",national);
+	}
+
+	@Override
+	public List<Brand> compareCar2(int brand_ids) throws Exception {
+		return sqlSession.selectList("BrandMapper.compareCar2",brand_ids);
 	}
 
 

@@ -47,6 +47,24 @@ public class BrandServiceImpl implements BrandService{
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> compareCar(String national) throws Exception {
+		List<Brand> list= brandDao.compareCar(national);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> compareCar2(int brand_ids) throws Exception {
+		List<Brand> list= brandDao.compareCar2(brand_ids);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		return map;
+	}
+
 	
 	
 

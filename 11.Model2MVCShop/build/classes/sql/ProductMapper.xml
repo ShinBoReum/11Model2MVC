@@ -55,6 +55,15 @@
 	   	</set>
 	   	WHERE prod_no = #{prodNo}
 	 </update>
+	 
+	  <select  id="compareCar2" 	resultMap="productSelectMap">
+	 	 SELECT b.*, p.prod_name as PROD_NAME, p.prod_no as prod_no
+	 	 from brand b, product p 
+	 	 where p.brand_id=b.brand_id
+	 	 and b.brand_id = #{brand_id}
+	 	 order by b.brand_id
+			
+	 </select>
 		 
 	<!--SQL : SELECT LIST-->
 	 <select  id="getProductList"  parameterType="search"	resultMap="productSelectMap">

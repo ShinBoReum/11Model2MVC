@@ -26,7 +26,6 @@ public class Brand {
 
 
 	public void setBrandNam(String brandNam) {
-		System.out.println("브랜드브이오입니다.");
 		this.brandNam = brandNam;
 	}
 

@@ -16,7 +16,7 @@
 <script type="text/javascript">
 
 function history(){
-	popWin = window.open("/history.jsp",
+	popWin = window.open("/addbrands.jsp",
 												"popWin",
 												"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 }
@@ -134,13 +134,13 @@ $( function() {
 						<c:forEach var="brand" items="${list}">
 						
 							
-							<option value="1">${brand.brandNam }</option>
+							<option value="${brand.brand_id}">${brand.brandNam }</option>
 						</c:forEach>
 					</select>
 					
 					</td>
 					<td>
-					<a href="javascript:history()">추가하기(後리뉴하세요)</a>
+					<a href="javascript:history()">추가하기</a>
 					</td>
 		
 					

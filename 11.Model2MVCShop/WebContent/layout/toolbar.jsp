@@ -3,7 +3,11 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<script type="text/javascript">
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+</script>
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar  navbar-inverse navbar-fixed-top">
 	
@@ -37,13 +41,12 @@
 	                     </a>
 	                     <ul class="dropdown-menu">
 	                         <li><a href="#">개인정보조회</a></li>
-	                         
 	                         <c:if test="${sessionScope.user.role == 'admin'}">
 	                         	<li><a href="#">회원정보조회</a></li>
 	                         </c:if>
 	                         
 	                         <li class="divider"></li>
-	                         <li><a href="#">etc...</a></li>
+	                         
 	                     </ul>
 	                 </li>
 	                 
@@ -58,7 +61,7 @@
 		                         <li><a href="#">판매상품등록</a></li>
 		                         <li><a href="#">판매상품관리</a></li>
 		                         <li class="divider"></li>
-		                         <li><a href="#">etc..</a></li>
+		                         
 		                     </ul>
 		                </li>
 	                 </c:if>
@@ -79,15 +82,23 @@
 	                         
 	                         <li><a href="history()">최근본상품</a></li>
 	                         <li class="divider"></li>
-	                         <li><a href="history()">etc..</a></li>
+	                        
 	                     </ul>
 	                 </li>
 	                 
-	                 <li><a href="#">etc...</a></li>
+	                 
 	             </ul>
 	             
 	             <ul class="nav navbar-nav navbar-right">
-	                <li><a href="#">로그아웃</a></li>
+	             	<li>
+	             	<c:if test="${empty sessionScope.user}">
+	             	<a href="/user/login">로그인</a>
+	                </c:if>
+	                <c:if test="${!empty sessionScope.user}">
+	                <a href="#">로그아웃</a>
+	                </c:if>
+	                </li>
+	             
 	            </ul>
 		</div>
 		<!-- dropdown hover END -->	       
@@ -99,7 +110,6 @@
    	
    	
    	<script type="text/javascript">
-	
 		//============= logout Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -136,7 +146,7 @@
 		 	
 			$( "a:contains('차 량 비 교')" ).on("click" , function() {
 				
-		 		self.location = "/brand/compare.jsp"
+		 		self.location = "/brand/compareCar"
 		 		
 			});
 		 	
@@ -158,8 +168,23 @@
 		
 		//=============  개인정보조회회 Event  처리 =============	
 	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
+	 		if(${empty sessionScope.user}){
+	 			if (confirm("로그인후 이용가능 합니다.\n로그인 하시겠습니까?") == true){    //확인
+					 
+					 self.location="/user/login"
+
+				     //document.removefrm.submit();
+
+				 }else{   //취소
+
+				     return;
+
+				 }
+	 			
+	 		}else{
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
-		});
+	 		}
+	 	});
 		
 	</script>  
